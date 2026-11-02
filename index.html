@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>AI V2RAY CLIENT // COPPER COMPASS</title>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Space Grotesk, Orbitron, JetBrains Mono, Allerta Stencil, Hanken Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700;800&amp;family=Orbitron:wght@600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- BEGIN: Custom Steel & PCB Skeuomorphic Styles -->
+<style data-purpose="steel-textures">
+  /* High-fidelity Brushed Stainless Steel Vertical Grain */
+  .steel-chassis {
+    background: repeating-linear-gradient(
+      90deg,
+      #b8c2cc 0px,
+      #cad3dc 1px,
+      #e2e8f0 2px,
+      #cbd5e1 3px,
+      #9aa9bb 4px,
+      #dbe2ea 5px
+    );
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.45);
+  }
+
+  .steel-plate {
+    background: linear-gradient(145deg, #f8fafc 0%, #d5dde6 20%, #a4b3c4 50%, #dce4ed 80%, #7e8d9f 100%);
+    position: relative;
+  }
+
+  /* High-Pressure Hydraulic Stamped Metal debossed groove styling */
+  .stamped-metal-groove {
+    color: #12161b;
+    text-shadow: 0 -2px 1.2px rgba(0,0,0,0.98), 0 2px 1.4px rgba(255,255,255,0.92);
+    filter: drop-shadow(0px -1px 1px rgba(0,0,0,0.9));
+  }
+
+  .stamped-metal-sub {
+    color: #1b2129;
+    text-shadow: 0 -1.2px 1px rgba(0,0,0,0.95), 0 1.2px 0.8px rgba(255,255,255,0.85);
+  }
+
+  /* Matte Dark Slate / Anthracite Laser-Cut Stencil Plate Style */
+  .matte-anthracite-plate {
+    background: linear-gradient(155deg, #2a3038 0%, #1c2127 50%, #15191f 100%);
+    box-shadow:
+      0 10px 24px -4px rgba(0,0,0,0.7),
+      inset 0 1px 1px rgba(255,255,255,0.18),
+      inset 0 -1px 2px rgba(0,0,0,0.8);
+    border: 1px solid #333a42;
+  }
+
+  /* Cutout Stencil Typography with Warm Amber/Gold Ambient Backglow */
+  .stencil-cutout-glow {
+    font-family: 'Allerta Stencil', 'Space Grotesk', sans-serif;
+    color: #ffd8a8;
+    text-shadow:
+      0 0 2px #fff3d6,
+      0 0 8px #f59e0b,
+      0 0 16px rgba(217, 119, 6, 0.8),
+      0 1px 2px #0a0c10;
+    letter-spacing: 0.08em;
+  }
+
+  .engraved-stencil-label {
+    font-family: 'JetBrains Mono', monospace;
+    color: #e2e8f0;
+    text-shadow:
+      0 -1px 0 rgba(0, 0, 0, 0.9),
+      0 1px 1px rgba(255, 255, 255, 0.25),
+      0 0 6px rgba(234, 179, 8, 0.45);
+    letter-spacing: 0.14em;
+  }
+
+  .laser-slit-divider {
+    background: linear-gradient(90deg, transparent 0%, #f59e0b 20%, #fde68a 50%, #f59e0b 80%, transparent 100%);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.9), 0 0 14px rgba(217, 119, 6, 0.6);
+    height: 1.5px;
+  }
+
+  .steel-bevel-raised {
+    box-shadow:
+      -2px -2px 5px rgba(255, 255, 255, 0.9),
+      2px 2px 6px rgba(0, 0, 0, 0.55),
+      inset 1px 1px 1.5px rgba(255, 255, 255, 0.9),
+      inset -1px -1px 1.5px rgba(0, 0, 0, 0.4);
+  }
+
+  .steel-bevel-cutout {
+    box-shadow:
+      inset 2px 2px 5px rgba(0, 0, 0, 0.9),
+      inset -1px -1px 2px rgba(255, 255, 255, 0.7),
+      0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  /* Crystal-Clear Transparent Frosted Glass with Lens Refractions */
+  .glass-meter-lens-clear {
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.02) 60%, rgba(0, 10, 25, 0.35) 100%);
+    backdrop-filter: blur(0.4px);
+    box-shadow:
+      inset 0 2px 5px rgba(255, 255, 255, 0.85),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.8),
+      inset 2px 0 3px rgba(255, 255, 255, 0.25),
+      0 4px 12px rgba(0, 0, 0, 0.65);
+  }
+
+  /* Transparent Smoked Beveled Glass Chassis for Instrument Cluster */
+  .transparent-glass-chassis {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(200, 240, 220, 0.04) 40%, rgba(8, 25, 18, 0.45) 100%);
+    backdrop-filter: blur(0.8px);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.65),
+      inset 0 2px 3px rgba(255, 255, 255, 0.75),
+      inset -1px -2px 4px rgba(0, 0, 0, 0.85),
+      inset 0 0 22px rgba(16, 185, 129, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.38);
+  }
+
+  /* 3D Polished Gold Extruded Typography */
+  .gold-3d-text {
+    background: linear-gradient(180deg, #fffbeb 0%, #fde047 20%, #d97706 45%, #b45309 60%, #78350f 85%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 1px 0px #b45309)
+            drop-shadow(0px 2px 0px #92400e)
+            drop-shadow(0px 3px 0px #78350f)
+            drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.75));
+  }
+
+  /* Backlit Laser Cut Acrylic Plate Effect */
+  .laser-cut-amber {
+    color: #fed7aa;
+    text-shadow: 0 0 4px #f97316, 0 0 10px #ea580c, 0 0 15px rgba(234, 88, 12, 0.6);
+  }
+
+  .laser-cut-cyan {
+    color: #cffafe;
+    text-shadow: 0 0 4px #06b6d4, 0 0 10px #0891b2, 0 0 15px rgba(6, 182, 212, 0.5);
+  }
+
+  /* Oscilloscope Pulse Dynamic CSS Keyframes */
+  @keyframes rainbowOscilloscopeSweep {
+    0% {
+      stroke-dashoffset: 800;
+      opacity: 0.3;
+      filter: drop-shadow(0 0 3px #ff0055) drop-shadow(0 0 8px #ff7700);
+    }
+    25% {
+      opacity: 0.95;
+      filter: drop-shadow(0 0 5px #ff0055) drop-shadow(0 0 12px #ffe600) drop-shadow(0 0 20px #00ff66);
+    }
+    50% {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px #00f3ff) drop-shadow(0 0 16px #0066ff) drop-shadow(0 0 24px #cc00ff);
+    }
+    75% {
+      opacity: 0.9;
+      filter: drop-shadow(0 0 6px #cc00ff) drop-shadow(0 0 14px #ff0077);
+    }
+    100% {
+      stroke-dashoffset: -800;
+      opacity: 0.2;
+      filter: drop-shadow(0 0 3px #00f3ff);
+    }
+  }
+
+  @keyframes rainbowLeadHeadSpark {
+    0% { offset-distance: 0%; opacity: 0; transform: scale(0.6); }
+    10% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 8px #ff0055) drop-shadow(0 0 14px #ffbb00); }
+    50% {
+      transform: scale(1.8);
+      filter: drop-shadow(0 0 15px #00f3ff) drop-shadow(0 0 24px #00ff66) drop-shadow(0 0 32px #ff00ea) brightness(2);
+    }
+    90% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 10px #b700ff); }
+    100% { offset-distance: 100%; opacity: 0; transform: scale(0.5); }
+  }
+
+  .ecg-base-track {
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 1.5;
+  }
+
+  .ecg-oscilloscope-rainbow-beam {
+    stroke-dasharray: 180 620;
+    animation: rainbowOscilloscopeSweep 2.2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    mix-blend-mode: screen;
+  }
+
+  .ecg-rainbow-spark {
+    offset-path: path("M 0,50 L 140,50 L 155,48 L 165,50 L 175,12 L 188,88 L 200,30 L 212,66 L 224,48 L 235,50 L 290,50 L 305,48 L 315,8 L 328,94 L 340,36 L 352,50 L 500,50");
+    animation: rainbowLeadHeadSpark 2.2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    mix-blend-mode: screen;
+  }
+
+  /* Stainless Steel Dome Cap Screws */
+  .dome-cap-screw {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #cbd5e1 32%, #64748b 70%, #1e293b 100%);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.7),
+      inset 0 1.2px 1.5px rgba(255, 255, 255, 0.9),
+      inset 0 -1.5px 2px rgba(0, 0, 0, 0.85);
+    position: relative;
+  }
+  .dome-cap-screw::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 1.4px;
+    background: #090d14;
+    transform: translate(-50%, -50%) rotate(42deg);
+    box-shadow: 0 0.5px 0.5px rgba(255, 255, 255, 0.4);
+  }
+
+  /* Circuit Animations */
+  @keyframes circuitSpinClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes pcbPulseAmber {
+    0%, 100% { stroke-dashoffset: 120; filter: drop-shadow(0 0 2px #f59e0b) drop-shadow(0 0 6px #fbbf24); }
+    50% { stroke-dashoffset: 0; filter: drop-shadow(0 0 5px #fbbf24) drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 16px #d97706); }
+  }
+  @keyframes pcbPulseCyan {
+    0%, 100% { stroke-dashoffset: -100; filter: drop-shadow(0 0 2px #00f3ff) drop-shadow(0 0 6px #38bdf8); }
+    50% { stroke-dashoffset: 20; filter: drop-shadow(0 0 6px #00f3ff) drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 18px #0284c7); }
+  }
+  @keyframes fastSparkFlash {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    35% { opacity: 1; transform: scale(1.4); filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 16px #00f3ff); }
+    70% { opacity: 0.3; transform: scale(0.9); }
+  }
+  @keyframes pcbPowerPulseActive {
+    0%, 100% { opacity: 0.75; transform: scale(1); filter: drop-shadow(0 0 6px #f59e0b); }
+    50% { opacity: 1; transform: scale(1.04); filter: drop-shadow(0 0 14px #fbbf24) drop-shadow(0 0 22px #f59e0b); }
+  }
+
+  .circuit-track-middle { animation: circuitSpinClockwise 1.8s linear infinite; }
+  .circuit-track-fast { animation: circuitSpinClockwise 1.0s linear infinite; }
+  .circuit-track-bandwidth { animation: circuitSpinClockwise 0.85s linear infinite; }
+
+  .branch-trace-amber { stroke-dasharray: 24 36; animation: pcbPulseAmber 1.2s ease-in-out infinite; }
+  .branch-trace-cyan { stroke-dasharray: 20 30; animation: pcbPulseCyan 0.9s ease-in-out infinite; }
+  .spark-node { animation: fastSparkFlash 0.75s ease-in-out infinite; }
+  .pcb-glow-active { animation: pcbPowerPulseActive 1.25s ease-in-out infinite; }
+
+  .needle-transition {
+    transition: transform 0.25s ease-out;
+    transform-origin: 50px 50px;
+  }
+  .circuit-glow-container {
+    transition: opacity 0.45s ease-in-out, filter 0.45s ease-in-out;
+  }
+  .power-actuator-btn {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Industrial Tactile Switches */
+  .knurled-switch {
+    background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 50%, #475569 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.6), inset 0 1px 1px #fff;
+    transition: all 0.2s ease;
+  }
+  .knurled-switch.active {
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 50%, #78350f 100%);
+    box-shadow: 0 0 10px rgba(245,158,11,0.8), inset 0 1px 1px #fff;
+  }
+
+  /* Hydraulic Drawer Backdrop & Drawer */
+  .hydraulic-sheet-backdrop {
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+  .hydraulic-sheet-backdrop.hidden-sheet {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .hydraulic-sheet-backdrop.open-sheet {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+  .hydraulic-sheet-drawer {
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(100%);
+  }
+  .hydraulic-sheet-backdrop.open-sheet .hydraulic-sheet-drawer {
+    transform: translateY(0);
+  }
+  .hydraulic-handle-latch {
+    background: linear-gradient(180deg, #cbd5e1 0%, #64748b 50%, #334155 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), inset 0 1px 0.5px rgba(255, 255, 255, 0.8);
+  }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased select-none flex justify-center items-center min-h-screen p-0 sm:p-2">
+<!-- Master Mobile Shell -->
+<main class="w-full max-w-[420px] h-[915px] max-h-screen overflow-hidden flex flex-col justify-between steel-chassis rounded-none sm:rounded-[36px] border-x sm:border-4 border-slate-400 shadow-[0_20px_50px_rgba(0,0,0,0.95)] relative" data-purpose="copper-compass-hardware-frame">
+<!-- TOP HEADER / STATUS -->
+<div class="flex-shrink-0">
+<!-- Hardware Status Banner -->
+<div class="w-full pt-1.5 pb-1 px-4 flex items-center justify-between text-[11px] font-mono tracking-widest border-b border-slate-400/50" data-purpose="hardware-status-header">
+<span class="tracking-[0.18em] font-['Space_Grotesk'] font-bold text-[10.5px] uppercase stamped-metal-sub">CH-01 // ARAGON-AI</span>
+<div class="flex items-center space-x-1.5 bg-slate-300/90 px-2 py-0.5 rounded-full border border-slate-400 shadow-inner" id="top-status-badge">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping" id="top-status-led"></span>
+<span class="text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-slate-900" id="top-status-text">SECURE TUNNEL</span>
+</div>
+<span class="tracking-[0.18em] font-['Space_Grotesk'] font-bold text-[10.5px] uppercase stamped-metal-sub">BAT 98% ⚡</span>
+</div>
+<!-- Master Header Plate with Oscilloscope Wave Overlay -->
+<header class="mx-3 mt-1 p-2 rounded-xl steel-plate steel-bevel-raised relative border border-slate-300/90 overflow-hidden" data-purpose="main-title-chassis">
+<div class="dome-cap-screw absolute top-1.5 left-1.5 z-40"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5 z-40"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5 z-40"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5 z-40"></div>
+<div class="text-center relative z-10 py-0.5">
+<h1 class="text-[23px] font-black font-['Orbitron'] tracking-wider gold-3d-text uppercase leading-tight drop-shadow-md">
+          AI V2RAY CLIENT
+        </h1>
+<p class="text-[9px] font-mono tracking-[0.2em] uppercase mt-0.5 flex items-center justify-center space-x-1.5">
+<span class="font-['Space_Grotesk'] font-bold text-[9px] tracking-[0.22em] uppercase stamped-metal-sub">COPPER COMPASS ENGINE</span>
+<span class="text-amber-800 font-black text-[7px]">■</span>
+<span class="font-['Space_Grotesk'] font-bold text-[9px] tracking-[0.22em] uppercase stamped-metal-sub">XRAY CORE V1.8.16</span>
+</p>
+</div>
+<!-- Oscilloscope Neon Wave Over Title -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-30 overflow-hidden mix-blend-screen circuit-glow-container" id="ecg-container">
+<svg class="w-[125%] h-14" fill="none" preserveaspectratio="none" viewbox="0 0 500 100">
+<defs>
+<lineargradient id="neonRainbowOscilloscopeGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#ff0044" stop-opacity="0.9"></stop>
+<stop offset="15%" stop-color="#ff6600" stop-opacity="1"></stop>
+<stop offset="32%" stop-color="#ffea00" stop-opacity="1"></stop>
+<stop offset="48%" stop-color="#00ff66" stop-opacity="1"></stop>
+<stop offset="65%" stop-color="#00f3ff" stop-opacity="1"></stop>
+<stop offset="82%" stop-color="#0055ff" stop-opacity="1"></stop>
+<stop offset="100%" stop-color="#d900ff" stop-opacity="0.95"></stop>
+</lineargradient>
+<filter height="160%" id="rainbowNeonGlowFilter" width="160%" x="-30%" y="-30%">
+<fegaussianblur in="SourceGraphic" result="blur" stddeviation="2.5"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<path class="ecg-base-track" d="M 0,50 L 140,50 L 155,48 L 165,50 L 175,12 L 188,88 L 200,30 L 212,66 L 224,48 L 235,50 L 290,50 L 305,48 L 315,8 L 328,94 L 340,36 L 352,50 L 500,50" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="ecg-oscilloscope-rainbow-beam" d="M 0,50 L 140,50 L 155,48 L 165,50 L 175,12 L 188,88 L 200,30 L 212,66 L 224,48 L 235,50 L 290,50 L 305,48 L 315,8 L 328,94 L 340,36 L 352,50 L 500,50" filter="url(#rainbowNeonGlowFilter)" stroke="url(#neonRainbowOscilloscopeGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"></path>
+</svg>
+<div class="ecg-rainbow-spark absolute w-3 h-3 rounded-full bg-white shadow-[0_0_12px_#ffffff,0_0_20px_#00f3ff,0_0_30px_#ff00ea]" id="ecg-spark"></div>
+</div>
+</header>
+<!-- Hydraulic Stamped Developer & Repository Line -->
+<div class="mx-3 my-0.5 flex items-center justify-center">
+<div class="relative w-full py-0.5 px-3 flex items-center justify-center">
+<div class="absolute inset-x-4 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-transparent via-slate-400/40 to-transparent pointer-events-none"></div>
+<span class="relative z-10 font-['Space_Grotesk'] text-[14.5px] font-black tracking-[0.24em] uppercase select-none stamped-metal-groove">
+          DEVELOPED BY VICTOR GEEK
+        </span>
+</div>
+</div>
+<!-- 3 PRIMARY TACTILE TABS (from Aragon52/copper-compass architecture) -->
+<nav class="mx-3 my-1 grid grid-cols-3 gap-2" data-purpose="primary-navigation-tabs">
+<button class="py-1.5 px-1 rounded-lg bg-gradient-to-b from-slate-100 via-slate-200 to-slate-400 border border-slate-300 steel-bevel-raised flex items-center justify-center space-x-1.5 active:translate-y-0.5 cursor-pointer transition-all" id="nav-btn-connect" onclick="switchMainTab('connect')">
+<span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]" id="tab-led-connect"></span>
+<span class="text-[10px] font-['Space_Grotesk'] font-bold text-emerald-950 tracking-[0.16em] uppercase stamped-metal-sub">CONNECT</span>
+</button>
+<button class="py-1.5 px-1 rounded-lg bg-gradient-to-b from-slate-200 to-slate-300 border border-slate-300 shadow-sm flex items-center justify-center space-x-1.5 active:translate-y-0.5 cursor-pointer opacity-80 hover:opacity-100 transition-all" id="nav-btn-settings" onclick="switchMainTab('settings')">
+<svg class="w-3.5 h-3.5 text-slate-800" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+<span class="text-[10px] font-['Space_Grotesk'] font-bold text-slate-900 tracking-[0.16em] uppercase stamped-metal-sub">SETTINGS</span>
+</button>
+<button class="py-1.5 px-1 rounded-lg bg-gradient-to-b from-slate-200 to-slate-300 border border-slate-300 shadow-sm flex items-center justify-center space-x-1.5 active:translate-y-0.5 cursor-pointer opacity-80 hover:opacity-100 transition-all" id="nav-btn-info" onclick="switchMainTab('info')">
+<svg class="w-3.5 h-3.5 text-slate-800" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+<span class="text-[10px] font-['Space_Grotesk'] font-bold text-slate-900 tracking-[0.16em] uppercase stamped-metal-sub">INFO</span>
+</button>
+</nav>
+</div>
+<!-- SCROLLABLE BODY CONTENT PER ACTIVE TAB -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden px-3 space-y-2 pb-1" id="tab-content-area">
+<!-- ============================================== -->
+<!-- TAB 1: CONNECTION (DEFAULT VIEW)               -->
+<!-- ============================================== -->
+<div class="space-y-2" id="view-connect">
+<!-- 1. AI Gemini Assist Bay -->
+<section class="p-2 rounded-2xl matte-anthracite-plate relative" data-purpose="gemini-ai-routing-plate">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="bg-black/85 px-3 py-2 rounded-xl border border-slate-700/80 shadow-[inset_0_2px_6px_rgba(0,0,0,0.9)]">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center space-x-1.5">
+<span class="text-amber-400 text-xs filter drop-shadow-[0_0_4px_#f59e0b]">✦</span>
+<span class="text-[10.5px] font-bold stencil-cutout-glow">AI · ASK GEMINI TUNNEL ROUTE</span>
+</div>
+<span class="text-[7.5px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 px-1.5 py-0.5 rounded font-bold tracking-widest shadow-[0_0_6px_rgba(245,158,11,0.3)]">NEURAL v2</span>
+</div>
+<div class="laser-slit-divider mb-2"></div>
+<!-- Prompt input -->
+<input class="w-full text-[10px] font-mono bg-slate-950 text-amber-200 placeholder-slate-500 px-2.5 py-1.5 rounded border border-slate-700 focus:border-amber-400 focus:ring-0 shadow-inner" id="ai-purpose-input" placeholder="What do you want to use the VPN for? Type platform or paste key..." type="text" value="Low latency competitive gaming &amp; bypass DPI restrictions"/>
+<!-- Quick recommendation chips -->
+<div class="flex flex-wrap gap-1 mt-1.5">
+<button class="text-[8px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-200/90 hover:border-amber-400" onclick="applyAiPrompt('Optimize route for PUBG Mobile &amp; MLBB gaming ping')">PUBG Mobile</button>
+<button class="text-[8px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-200/90 hover:border-amber-400" onclick="applyAiPrompt('Unblock Facebook, Messenger &amp; Instagram CDN')">Facebook &amp; IG</button>
+<button class="text-[8px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-200/90 hover:border-amber-400" onclick="applyAiPrompt('Maximum throughput for YouTube 4K 60FPS streaming')">YouTube 4K</button>
+<button class="text-[8px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-200/90 hover:border-amber-400" onclick="applyAiPrompt('Anti-Censorship Reality stealth bypass mode')">Anti-Censorship</button>
+</div>
+<!-- Gemini API Key input field (masked) -->
+<div class="mt-2 flex items-center space-x-1.5 bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+<span class="text-[8px] font-mono text-slate-400 tracking-wider">KEY:</span>
+<input class="bg-transparent text-[8.5px] font-mono text-slate-300 w-full focus:outline-none placeholder-slate-600" id="gemini-key-field" placeholder="Optional Custom Gemini API Key (defaults to embedded)" type="password" value="AIzaSyB9X8-COPPERCOMPASS-KEY4912"/>
+<button class="text-[8px] font-mono text-amber-400" onclick="toggleKeyVisibility()" title="Toggle visibility">👁</button>
+</div>
+<button class="w-full mt-2 py-1.5 rounded bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 border border-amber-300 font-['Orbitron'] text-[10px] font-black text-slate-950 tracking-wider shadow-[0_2px_6px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.7)] active:translate-y-0.5 flex items-center justify-center space-x-1.5 cursor-pointer" onclick="runAiAnalysis()">
+<span id="ai-btn-text">⚡ ANALYZE &amp; RECOMMEND BEST ROUTE</span>
+</button>
+</div>
+</section>
+<!-- 2. Active Server Card (with Switch Trigger) -->
+<section class="py-1.5 px-2.5 rounded-xl matte-anthracite-plate relative overflow-hidden" data-purpose="server-node-selector" id="server-tray">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="px-3.5 py-0.5 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="text-base filter drop-shadow-[0_2px_3px_rgba(0,0,0,0.8)]" id="server-flag">🇸🇬</span>
+<div>
+<div class="text-[11.5px] font-bold stencil-cutout-glow flex items-center space-x-1.5" id="server-name">
+<span>SG-CLOUDFLARE-REALITY-01</span>
+</div>
+<div class="laser-slit-divider my-1 w-full max-w-[210px]"></div>
+<div class="text-[8px] font-mono text-amber-200/90 flex items-center space-x-1 tracking-wider" id="server-specs">
+<span class="text-emerald-400 font-bold" id="server-protocol">● VLESS-XTLS</span>
+<span class="text-slate-500">|</span>
+<span>PORT: 443</span>
+<span class="text-slate-500">|</span>
+<span class="text-slate-300">PING: <span class="text-amber-300 font-bold" id="active-server-ping">38ms</span></span>
+<span class="text-slate-500">|</span>
+<span class="text-emerald-300">LOSS: 0.0%</span>
+</div>
+</div>
+</div>
+<button class="px-3 py-1 text-[9px] font-mono font-extrabold text-slate-900 bg-gradient-to-b from-amber-200 via-amber-300 to-amber-500 rounded border border-amber-200 shadow-[0_2px_4px_rgba(0,0,0,0.5)] active:translate-y-0.5 cursor-pointer tracking-wider" onclick="openDrawer('server')">
+            SWITCH
+          </button>
+</div>
+</section>
+<!-- 3. Main Glass Chassis with GREEN PCB data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23062618'/%3E%3Cpath d='M0 20h200M0 60h200M0 100h200M0 140h200M0 180h200M20 0v200M60 0v200M100 0v200M140 0v200M180 0v200' stroke='%230a422b' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='140' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='100' cy='140' r='8' fill='%23f59e0b' opacity='0.4'/%3E%3Cpath d='M60 60l40 40h40v40' fill='none' stroke='%2322c55e' stroke-width='1.8'/%3E%3Cpath d='M140 60l-30 30v50' fill='none' stroke='%23d97706' stroke-width='1.8'/%3E%3C/svg%3E / data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='85%25' stop-color='%230f172a'/%3E%3Cstop offset='100%25' stop-color='%23020617'/%3E%3C/radialGradient%3E%3Ccircle cx='60' cy='60' r='58' fill='url(%23g)'/%3E%3Ccircle cx='60' cy='60' r='48' fill='none' stroke='%23334155' stroke-dasharray='2 4' stroke-width='1.5'/%3E%3Ccircle cx='60' cy='60' r='38' fill='none' stroke='%23475569' stroke-dasharray='6 8' stroke-width='1'/%3E%3C/svg%3E & Dual Analog Needles -->
+<section class="p-2 rounded-2xl relative overflow-hidden transparent-glass-chassis" data-purpose="analog-meter-cluster">
+<!-- 90 Degree Flat Green PCB Motherboard Substrate using DATA:IMAGE:IMAGE_6 / DATA:IMAGE:IMAGE_7 -->
+<div class="absolute inset-0 pointer-events-none z-0 border border-emerald-950/60 overflow-hidden" id="motherboard-substrate">
+<img alt="Flat Green PCB Substrate" class="w-full h-full object-cover opacity-90 filter contrast-125 brightness-95" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23062618'/%3E%3Cpath d='M0 20h200M0 60h200M0 100h200M0 140h200M0 180h200M20 0v200M60 0v200M100 0v200M140 0v200M180 0v200' stroke='%230a422b' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='140' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='100' cy='140' r='8' fill='%23f59e0b' opacity='0.4'/%3E%3Cpath d='M60 60l40 40h40v40' fill='none' stroke='%2322c55e' stroke-width='1.8'/%3E%3Cpath d='M140 60l-30 30v50' fill='none' stroke='%23d97706' stroke-width='1.8'/%3E%3C/svg%3E"/>
+<!-- Active Neon Overlay Streams -->
+<svg class="absolute inset-0 w-full h-full" id="green-motherboard-svg" preserveaspectratio="none" viewbox="0 0 380 200">
+<defs>
+<filter height="240%" id="neonMultiSparkGlow" width="240%" x="-70%" y="-70%">
+<fegaussianblur in="SourceGraphic" result="blur" stddeviation="2.8"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<g class="circuit-glow-container" id="chassis-pcb-neon-streams" opacity="1">
+<path class="branch-trace-cyan" d="M 8 26 L 45 26 L 65 42 L 125 42 L 140 26 L 160 26" fill="none" filter="url(#neonMultiSparkGlow)" stroke="#00f3ff" stroke-linecap="round" stroke-width="2.2"></path>
+<path class="branch-trace-amber" d="M 372 26 L 335 26 L 315 42 L 255 42 L 240 26 L 220 26" fill="none" filter="url(#neonMultiSparkGlow)" stroke="#f59e0b" stroke-linecap="round" stroke-width="2.2"></path>
+<circle class="spark-node" cx="65" cy="42" fill="#ffffff" filter="url(#neonMultiSparkGlow)" r="2.8"></circle>
+<circle class="spark-node" cx="315" cy="42" fill="#fde047" filter="url(#neonMultiSparkGlow)" r="2.8"></circle>
+</g>
+</svg>
+</div>
+<div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.1] to-white/[0.25] pointer-events-none z-10"></div>
+<div class="dome-cap-screw absolute top-1.5 left-1.5 z-30"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5 z-30"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5 z-30"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5 z-30"></div>
+<!-- Triple Gauge Cluster -->
+<div class="relative z-20 flex items-center justify-between px-0.5 py-0.5">
+<!-- LEFT: Latency Gauge with Analog Needle Physics -->
+<div class="flex flex-col items-center" data-purpose="gauge-ping">
+<div class="w-[88px] h-[88px] rounded-full p-1 bg-gradient-to-tr from-slate-400 via-slate-100 to-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),0_3px_6px_rgba(0,0,0,0.4)] flex items-center justify-center relative">
+<div class="w-full h-full rounded-full bg-slate-950 border-2 border-slate-700 relative overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 overflow-hidden opacity-75">
+<img alt="Dial Substrate" class="w-full h-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='85%25' stop-color='%230f172a'/%3E%3Cstop offset='100%25' stop-color='%23020617'/%3E%3C/radialGradient%3E%3Ccircle cx='60' cy='60' r='58' fill='url(%23g)'/%3E%3Ccircle cx='60' cy='60' r='48' fill='none' stroke='%23334155' stroke-dasharray='2 4' stroke-width='1.5'/%3E%3Ccircle cx='60' cy='60' r='38' fill='none' stroke='%23475569' stroke-dasharray='6 8' stroke-width='1'/%3E%3C/svg%3E"/>
+</div>
+<!-- Circuit Glow Ring -->
+<div class="absolute inset-0 flex items-center justify-center circuit-track-middle circuit-glow-container" id="latency-circuit">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="36" stroke="rgba(6,182,212,0.3)" stroke-dasharray="3 3" stroke-width="1.2"></circle>
+<circle cx="50" cy="14" fill="#00f3ff" r="2.8"></circle>
+<circle cx="86" cy="50" fill="#ff00a0" r="2"></circle>
+</svg>
+</div>
+<div class="absolute inset-0 glass-meter-lens-clear pointer-events-none z-10"></div>
+<!-- Needle & Readout -->
+<div class="relative z-20 flex flex-col items-center justify-center">
+<svg class="absolute -top-3 w-16 h-16 pointer-events-none" viewbox="0 0 100 100">
+<path d="M 22 75 A 34 34 0 1 1 78 75" fill="none" stroke="#475569" stroke-dasharray="3 4" stroke-width="2.5"></path>
+<g class="needle-transition" id="latency-needle-group" style="transform: rotate(0deg); transform-origin: 50px 50px;">
+<line stroke="#f97316" stroke-linecap="round" stroke-width="2.4" x1="50" x2="36" y1="50" y2="22"></line>
+</g>
+<circle cx="50" cy="50" fill="#e2e8f0" r="4" stroke="#0f172a" stroke-width="1.5"></circle>
+</svg>
+<span class="text-[14px] font-['Orbitron'] font-extrabold text-amber-300 mt-5 drop-shadow-[0_0_6px_rgba(245,158,11,0.8)] transition-colors duration-300" id="latency-val">38</span>
+<span class="text-[7px] font-mono font-bold text-slate-300 tracking-wider -mt-0.5" id="latency-unit">MS PING</span>
+</div>
+</div>
+</div>
+<span class="text-[9px] font-mono font-bold tracking-widest mt-1 engraved-stencil-label">LATENCY</span>
+</div>
+<!-- CENTER: Power Button Actuator -->
+<div class="flex flex-col items-center" data-purpose="master-power-switch">
+<div class="w-[112px] h-[112px] rounded-full bg-gradient-to-b from-slate-400 via-slate-200 to-slate-500 p-1.5 shadow-[0_8px_18px_rgba(0,0,0,0.5),inset_0_1.5px_2px_#fff]">
+<button class="power-actuator-btn w-full h-full rounded-full steel-chassis border-4 border-slate-300 shadow-[inset_0_4px_8px_rgba(0,0,0,0.7),0_2px_5px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col items-center justify-center group active:scale-95 cursor-pointer focus:outline-none" id="main-power-btn" onclick="togglePowerState()" title="Click to Toggle Master Power">
+<div class="absolute inset-0 overflow-hidden">
+<img alt="Power PCB" class="w-full h-full object-cover opacity-80" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23062618'/%3E%3Cpath d='M0 20h200M0 60h200M0 100h200M0 140h200M0 180h200M20 0v200M60 0v200M100 0v200M140 0v200M180 0v200' stroke='%230a422b' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='140' cy='60' r='6' fill='%2310b981' opacity='0.5'/%3E%3Ccircle cx='100' cy='140' r='8' fill='%23f59e0b' opacity='0.4'/%3E%3Cpath d='M60 60l40 40h40v40' fill='none' stroke='%2322c55e' stroke-width='1.8'/%3E%3Cpath d='M140 60l-30 30v50' fill='none' stroke='%23d97706' stroke-width='1.8'/%3E%3C/svg%3E"/>
+<div class="absolute inset-0 bg-emerald-950/40 mix-blend-color"></div>
+<div class="absolute inset-0 flex items-center justify-center circuit-track-fast circuit-glow-container" id="power-circuit-primary">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" opacity="0.9" r="41" stroke="#f59e0b" stroke-dasharray="16 28" stroke-width="1.6"></circle>
+<circle cx="50" cy="9" fill="#fff" r="3.2"></circle>
+<circle cx="91" cy="50" fill="#fbbf24" r="2.8"></circle>
+</svg>
+</div>
+</div>
+<div class="absolute inset-0 glass-meter-lens-clear pointer-events-none z-10"></div>
+<!-- Power Ring & Bolt -->
+<div class="relative z-20 flex flex-col items-center">
+<div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 via-amber-600 to-yellow-700 p-0.5 shadow-[0_0_16px_rgba(245,158,11,0.85)] flex items-center justify-center transition-all duration-300" id="power-emblem-ring">
+<div class="w-full h-full rounded-full bg-gradient-to-t from-slate-950 to-slate-800 flex items-center justify-center pcb-glow-active transition-all duration-300" id="power-emblem-core">
+<svg class="w-6 h-6 text-amber-300 filter drop-shadow-[0_0_7px_#f59e0b] transition-all duration-300" fill="currentColor" id="power-bolt-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+<span class="text-[9px] font-['Orbitron'] font-black text-emerald-400 tracking-wider mt-1 drop-shadow-[0_0_5px_#10b981] transition-colors duration-300" id="power-status-lbl">ONLINE</span>
+</div>
+</button>
+</div>
+<span class="text-[9.5px] font-mono font-bold tracking-widest mt-1 engraved-stencil-label">MAIN CHASSIS</span>
+</div>
+<!-- RIGHT: Bandwidth Speed Gauge -->
+<div class="flex flex-col items-center" data-purpose="gauge-speed">
+<div class="w-[88px] h-[88px] rounded-full p-1 bg-gradient-to-tr from-slate-400 via-slate-100 to-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5),0_3px_6px_rgba(0,0,0,0.4)] flex items-center justify-center relative">
+<div class="w-full h-full rounded-full bg-slate-950 border-2 border-slate-700 relative overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 overflow-hidden opacity-75">
+<img alt="Dial Substrate" class="w-full h-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='85%25' stop-color='%230f172a'/%3E%3Cstop offset='100%25' stop-color='%23020617'/%3E%3C/radialGradient%3E%3Ccircle cx='60' cy='60' r='58' fill='url(%23g)'/%3E%3Ccircle cx='60' cy='60' r='48' fill='none' stroke='%23334155' stroke-dasharray='2 4' stroke-width='1.5'/%3E%3Ccircle cx='60' cy='60' r='38' fill='none' stroke='%23475569' stroke-dasharray='6 8' stroke-width='1'/%3E%3C/svg%3E"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center circuit-track-bandwidth circuit-glow-container" id="bandwidth-circuit">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="36" stroke="rgba(0,240,255,0.3)" stroke-dasharray="4 4" stroke-width="1.3"></circle>
+<circle cx="50" cy="14" fill="#00f3ff" r="3"></circle>
+</svg>
+</div>
+<div class="absolute inset-0 glass-meter-lens-clear pointer-events-none z-10"></div>
+<div class="relative z-20 flex flex-col items-center justify-center">
+<svg class="absolute -top-3 w-16 h-16 pointer-events-none" viewbox="0 0 100 100">
+<path d="M 22 75 A 34 34 0 1 1 78 75" fill="none" stroke="#0284c7" stroke-dasharray="2 3" stroke-width="2.5"></path>
+<g class="needle-transition" id="speed-needle-group" style="transform: rotate(0deg); transform-origin: 50px 50px;">
+<line stroke="#38bdf8" stroke-linecap="round" stroke-width="2.4" x1="50" x2="68" y1="50" y2="32"></line>
+</g>
+<circle cx="50" cy="50" fill="#e2e8f0" r="4" stroke="#0f172a" stroke-width="1.5"></circle>
+</svg>
+<span class="text-[14px] font-['Orbitron'] font-extrabold text-cyan-300 mt-5 drop-shadow-[0_0_6px_rgba(6,182,212,0.9)] transition-colors duration-300" id="speed-val">24.8</span>
+<span class="text-[7px] font-mono font-bold text-slate-300 tracking-wider -mt-0.5" id="speed-unit">MB/S</span>
+</div>
+</div>
+</div>
+<span class="text-[9px] font-mono font-bold tracking-widest mt-1 engraved-stencil-label">BANDWIDTH</span>
+</div>
+</div>
+<!-- Mechanical Roller Rolling Digital Odometers -->
+<div class="grid grid-cols-2 gap-2 mt-1.5 pt-1.5 border-t border-slate-400/40 relative z-20">
+<div class="bg-black/95 px-2.5 py-1.5 rounded border border-slate-700/80 steel-bevel-cutout flex items-center justify-between shadow-lg">
+<span class="text-[8px] font-mono text-slate-400 font-bold tracking-wider">RX RECVD</span>
+<span class="text-[12px] font-mono font-black laser-cut-amber transition-all duration-300" id="rx-odometer">342.85 MB</span>
+</div>
+<div class="bg-black/95 px-2.5 py-1.5 rounded border border-slate-700/80 steel-bevel-cutout flex items-center justify-between shadow-lg">
+<span class="text-[8px] font-mono text-slate-400 font-bold tracking-wider">TX SENT</span>
+<span class="text-[12px] font-mono font-black laser-cut-cyan transition-all duration-300" id="tx-odometer">089.40 MB</span>
+</div>
+</div>
+</section>
+</div>
+<!-- ============================================== -->
+<!-- TAB 2: SETTINGS / CONFIG (ARAGON ARCHITECTURE) -->
+<!-- ============================================== -->
+<div class="space-y-2 hidden" id="view-settings">
+<!-- Section A: Hardware & Network Interlocks -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">HARDWARE &amp; NETWORK INTERLOCK</span>
+<span class="text-[7.5px] font-mono text-amber-400 bg-amber-950/60 border border-amber-500/40 px-1.5 py-0.5 rounded">LAYER 3/4</span>
+</div>
+<div class="space-y-2 mt-2">
+<!-- Kill Switch -->
+<div class="bg-black/90 p-2 rounded-lg border border-rose-900/60 flex items-center justify-between">
+<div>
+<div class="text-[10px] font-bold font-mono text-rose-300 flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+<span>HARDWARE KILL SWITCH</span>
+</div>
+<div class="text-[7.5px] text-slate-400">Block all traffic if tunnel collapses</div>
+</div>
+<button class="w-10 h-5 rounded-full p-0.5 knurled-switch active cursor-pointer flex items-center justify-end" onclick="toggleKnurledSwitch(this)">
+<div class="w-4 h-4 rounded-full bg-rose-200 shadow-md"></div>
+</button>
+</div>
+<!-- Upstream DNS Selection -->
+<div class="bg-black/85 p-2 rounded-lg border border-slate-700 flex items-center justify-between">
+<div>
+<div class="text-[10px] font-bold font-mono text-amber-300">UPSTREAM SECURE DNS</div>
+<div class="text-[7.5px] text-slate-400">Encrypted DoH/DoT resolver</div>
+</div>
+<select class="bg-slate-900 text-amber-200 text-[9.5px] font-mono border border-slate-700 rounded py-1 px-2 focus:ring-0">
+<option selected="">Cloudflare 1.1.1.1 (DoH)</option>
+<option>Google 8.8.8.8 (DoT)</option>
+<option>AdGuard Family Protect</option>
+<option>Quad9 9.9.9.9</option>
+<option>Custom Upstream Engine</option>
+</select>
+</div>
+<!-- Routing Policy Matrix -->
+<div class="bg-black/85 p-2 rounded-lg border border-slate-700">
+<div class="text-[10px] font-bold font-mono text-slate-200 mb-1">ROUTING POLICY MATRIX</div>
+<div class="grid grid-cols-2 gap-1.5 text-[8.5px] font-mono">
+<label class="flex items-center space-x-1.5 bg-slate-950 p-1.5 rounded border border-slate-800 cursor-pointer">
+<input checked="" class="text-amber-500 focus:ring-0 bg-slate-900 border-slate-700" name="route-policy" type="radio"/>
+<span class="text-amber-200">Rule-based (Smart)</span>
+</label>
+<label class="flex items-center space-x-1.5 bg-slate-950 p-1.5 rounded border border-slate-800 cursor-pointer">
+<input class="text-amber-500 focus:ring-0 bg-slate-900 border-slate-700" name="route-policy" type="radio"/>
+<span class="text-slate-300">Global Proxy</span>
+</label>
+<label class="flex items-center space-x-1.5 bg-slate-950 p-1.5 rounded border border-slate-800 cursor-pointer">
+<input class="text-amber-500 focus:ring-0 bg-slate-900 border-slate-700" name="route-policy" type="radio"/>
+<span class="text-slate-300">Bypass LAN Only</span>
+</label>
+<label class="flex items-center space-x-1.5 bg-slate-950 p-1.5 rounded border border-slate-800 cursor-pointer">
+<input class="text-amber-500 focus:ring-0 bg-slate-900 border-slate-700" name="route-policy" type="radio"/>
+<span class="text-slate-300">Bypass Mainland</span>
+</label>
+</div>
+</div>
+<!-- Inbound Endpoints -->
+<div class="grid grid-cols-2 gap-2 text-[8px] font-mono">
+<div class="bg-black/90 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">SOCKS5 LOCAL:</span>
+<span class="text-cyan-400 font-bold">127.0.0.1:10808</span>
+</div>
+<div class="bg-black/90 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">HTTP LOCAL:</span>
+<span class="text-cyan-400 font-bold">127.0.0.1:10809</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section B: Transport Protocols -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">TRANSPORT PROTOCOLS // REALITY</span>
+<span class="text-[7.5px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-1.5 py-0.5 rounded">FIRMWARE v2.4.1</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<div class="bg-black/80 p-2 rounded border border-slate-700 flex items-center justify-between">
+<div>
+<div class="text-[9.5px] font-mono font-bold text-amber-200">VLESS REALITY</div>
+<div class="text-[7px] text-slate-400">Vision XTLS Direct</div>
+</div>
+<button class="w-8 h-4 rounded-full p-0.5 knurled-switch active flex items-center justify-end" onclick="toggleKnurledSwitch(this)">
+<div class="w-3 h-3 rounded-full bg-white"></div>
+</button>
+</div>
+<div class="bg-black/80 p-2 rounded border border-slate-700 flex items-center justify-between">
+<div>
+<div class="text-[9.5px] font-mono font-bold text-slate-300">VMESS AEAD</div>
+<div class="text-[7px] text-slate-400">WebSocket + TLS</div>
+</div>
+<button class="w-8 h-4 rounded-full p-0.5 knurled-switch flex items-center justify-start" onclick="toggleKnurledSwitch(this)">
+<div class="w-3 h-3 rounded-full bg-slate-400"></div>
+</button>
+</div>
+<div class="bg-black/80 p-2 rounded border border-slate-700 flex items-center justify-between">
+<div>
+<div class="text-[9.5px] font-mono font-bold text-amber-200">TROJAN GFW</div>
+<div class="text-[7px] text-slate-400">gRPC Fast Multiplex</div>
+</div>
+<button class="w-8 h-4 rounded-full p-0.5 knurled-switch active flex items-center justify-end" onclick="toggleKnurledSwitch(this)">
+<div class="w-3 h-3 rounded-full bg-white"></div>
+</button>
+</div>
+<div class="bg-black/80 p-2 rounded border border-slate-700 flex items-center justify-between">
+<div>
+<div class="text-[9.5px] font-mono font-bold text-slate-300">SHADOWSOCKS</div>
+<div class="text-[7px] text-slate-400">2022-blake3 UDP</div>
+</div>
+<button class="w-8 h-4 rounded-full p-0.5 knurled-switch flex items-center justify-start" onclick="toggleKnurledSwitch(this)">
+<div class="w-3 h-3 rounded-full bg-slate-400"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- Section C: Core & Export Actions -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">CORE PROVISIONING &amp; EXPORT</span>
+<span class="text-[7.5px] font-mono text-cyan-400">NATIVE RUNTIME</span>
+</div>
+<div class="space-y-1.5 mt-2">
+<div class="flex items-center justify-between text-[9px] font-mono bg-black/80 p-2 rounded border border-slate-800">
+<span class="text-slate-400">ACTIVE ENGINE:</span>
+<span class="text-amber-300 font-bold">Xray-core v1.8.16 (Linux/Darwin/Win/Android)</span>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="py-1.5 px-2 rounded bg-slate-800 hover:bg-slate-700 border border-slate-600 text-[9px] font-mono text-amber-200 active:scale-95 transition-all flex items-center justify-center space-x-1" onclick="exportConfigJson()">
+<span>📋 EXPORT XRAY JSON</span>
+</button>
+<button class="py-1.5 px-2 rounded bg-slate-800 hover:bg-slate-700 border border-slate-600 text-[9px] font-mono text-cyan-200 active:scale-95 transition-all flex items-center justify-center space-x-1" onclick="copyRawUri()">
+<span>🔗 COPY RAW URI</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- ============================================== -->
+<!-- TAB 3: INFO / DIAGNOSTICS (ARAGON REPO)        -->
+<!-- ============================================== -->
+<div class="space-y-2 hidden" id="view-info">
+<!-- 1. Diagnostic Sweep Engine -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">HARDWARE DIAGNOSTIC SWEEP</span>
+<span class="text-[7.5px] font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-500/40 px-1.5 py-0.5 rounded">60 HZ REALTIME</span>
+</div>
+<div class="mt-2 space-y-2">
+<div class="grid grid-cols-3 gap-1.5 text-center font-mono">
+<div class="bg-black/80 p-1.5 rounded border border-slate-800">
+<div class="text-[7px] text-slate-400 uppercase">TCP HANDSHAKE</div>
+<div class="text-[11px] font-bold text-emerald-400" id="diag-tcp">24 ms</div>
+</div>
+<div class="bg-black/80 p-1.5 rounded border border-slate-800">
+<div class="text-[7px] text-slate-400 uppercase">TLS 1.3 RTT</div>
+<div class="text-[11px] font-bold text-amber-400" id="diag-tls">18 ms</div>
+</div>
+<div class="bg-black/80 p-1.5 rounded border border-slate-800">
+<div class="text-[7px] text-slate-400 uppercase">DNS LOOKUP</div>
+<div class="text-[11px] font-bold text-cyan-400" id="diag-dns">6 ms</div>
+</div>
+</div>
+<button class="w-full py-1.5 rounded bg-gradient-to-b from-cyan-600 to-cyan-800 border border-cyan-400 font-['Orbitron'] text-[9.5px] font-bold text-slate-950 tracking-wider shadow active:scale-95 transition-all" onclick="runDiagnosticSweep()">
+            ⚡ RUN FULL DIAGNOSTIC SWEEP
+          </button>
+</div>
+</section>
+<!-- 2. Client & Core Telemetry Specs -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">PROJECT ARCHITECTURE &amp; TELEMETRY</span>
+<span class="text-[7.5px] font-mono text-amber-300">BUILD #103</span>
+</div>
+<div class="space-y-1.5 mt-2 text-[9px] font-mono">
+<div class="bg-black/85 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">CLIENT RELEASE:</span>
+<span class="text-amber-200 font-bold">Copper Compass v2.4.1</span>
+</div>
+<div class="bg-black/85 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">CORE RUNTIME:</span>
+<span class="text-slate-200">Xray-core v1.8.16 (Multi-platform Native)</span>
+</div>
+<div class="bg-black/85 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">EXIT NODE EDGE:</span>
+<span class="text-cyan-300">Cloudflare Singapore Edge Datacenter</span>
+</div>
+<div class="bg-black/85 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">CAMOUFLAGE:</span>
+<span class="text-emerald-400">uTLS Chrome 120 Fingerprint + Reality</span>
+</div>
+<div class="bg-black/85 p-1.5 rounded border border-slate-800 flex justify-between">
+<span class="text-slate-400">PRIVACY AUDIT:</span>
+<span class="text-emerald-300 font-bold">Zero-Log Local Hardware Enclave</span>
+</div>
+</div>
+</section>
+<!-- 3. Android Capacitor Packaging & GitHub Badge -->
+<section class="p-2.5 rounded-2xl matte-anthracite-plate relative">
+<div class="dome-cap-screw absolute top-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute top-1.5 right-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 left-1.5"></div>
+<div class="dome-cap-screw absolute bottom-1.5 right-1.5"></div>
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-700">
+<span class="text-[11px] font-bold stencil-cutout-glow uppercase">ANDROID PACKAGING BRIDGE</span>
+<span class="text-[7.5px] font-mono text-emerald-400">CAPACITOR 5</span>
+</div>
+<div class="mt-2 bg-black/90 p-2 rounded border border-slate-800 text-[8.5px] font-mono text-slate-300 space-y-1">
+<div class="text-slate-400 font-bold mb-0.5">CLI Cross-Platform Build Terminal:</div>
+<div class="bg-slate-950 p-1 rounded border border-slate-800 text-amber-300 select-all">$ npx cap add android</div>
+<div class="bg-slate-950 p-1 rounded border border-slate-800 text-amber-300 select-all">$ npx cap sync android</div>
+<div class="bg-slate-950 p-1 rounded border border-slate-800 text-amber-300 select-all">$ npm run build &amp;&amp; npx cap open android</div>
+</div>
+<div class="mt-2 flex items-center justify-between pt-1 border-t border-slate-700">
+<a class="text-[9px] font-mono text-amber-400 hover:underline flex items-center space-x-1" href="https://github.com/Aragon52/copper-compass" target="_blank">
+<span>⚡ GitHub:</span>
+<span class="text-slate-200">Aragon52/copper-compass</span>
+</a>
+<span class="text-[7.5px] font-mono bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">MIT LICENSE</span>
+</div>
+</section>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- HYDRAULIC SERVER NODE SWITCH DRAWER MODAL      -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end justify-center hidden-sheet hydraulic-sheet-backdrop" id="drawer-server" onclick="handleBackdropClick(event, 'server')">
+<div class="w-full max-w-[420px] max-h-[85vh] overflow-y-auto matte-anthracite-plate rounded-t-[28px] border-t-2 border-x-2 border-slate-500 p-3 pt-2 relative shadow-[0_-15px_40px_rgba(0,0,0,0.95)] hydraulic-sheet-drawer">
+<!-- Grab Handle -->
+<div class="w-full flex flex-col items-center justify-center pb-1.5 cursor-pointer" onclick="closeAllDrawers()">
+<div class="w-16 h-1.5 rounded-full hydraulic-handle-latch"></div>
+<div class="text-[7.5px] font-mono text-slate-400 tracking-[0.25em] uppercase mt-1">HYDRAULIC VALVE // PULL DOWN</div>
+</div>
+<div class="dome-cap-screw absolute top-3 left-3"></div>
+<div class="dome-cap-screw absolute top-3 right-3"></div>
+<div class="px-1 py-1">
+<div class="flex items-center justify-between pb-2 border-b border-slate-700">
+<div>
+<div class="text-[12px] font-bold stencil-cutout-glow">SELECT ACTIVE TUNNEL RELAY</div>
+<div class="text-[8px] font-mono text-amber-400 bg-amber-950/60 border border-amber-500/40 px-1.5 py-0.5 rounded inline-block mt-0.5">5 REGISTERED NODES ONLINE</div>
+</div>
+<button class="text-slate-300 hover:text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-600 shadow-inner flex items-center space-x-1 active:translate-y-0.5" onclick="closeAllDrawers()">
+<span>CLOSE</span> <span class="text-amber-400">[✕]</span>
+</button>
+</div>
+<!-- Local Config Parser input from project specification -->
+<div class="mt-2 p-2 bg-black/90 rounded-xl border border-slate-700">
+<div class="text-[8.5px] font-mono text-slate-300 font-bold mb-1">LOCAL CONFIG PARSER // IMPORT URI</div>
+<div class="flex space-x-1.5">
+<input class="w-full text-[9px] font-mono bg-slate-950 text-amber-200 placeholder-slate-600 px-2 py-1 rounded border border-slate-700 focus:border-amber-400 focus:ring-0" id="uri-import-input" placeholder="Paste URI (vmess://, vless://, trojan://, ss://)..." type="text"/>
+<button class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[9px] font-mono font-bold rounded" onclick="importCustomUri()">
+              IMPORT
+            </button>
+</div>
+<div class="flex items-center justify-between mt-1 text-[7.5px] font-mono text-slate-400">
+<span class="cursor-pointer hover:text-amber-300" onclick="pasteFromClipboard()">📋 Paste from Clipboard</span>
+<span class="cursor-pointer hover:text-amber-300">📷 Scan QR Code</span>
+<span class="cursor-pointer hover:text-amber-300">🌐 Sub URL Sync</span>
+</div>
+</div>
+<!-- Protocol Filter Tabs -->
+<div class="flex space-x-1 my-2 overflow-x-auto text-[8px] font-mono">
+<button class="px-2.5 py-1 bg-amber-500 text-slate-950 font-bold rounded" onclick="filterNodes('ALL')">ALL (5)</button>
+<button class="px-2 py-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700" onclick="filterNodes('VLESS')">VLESS</button>
+<button class="px-2 py-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700" onclick="filterNodes('VMESS')">VMESS</button>
+<button class="px-2 py-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700" onclick="filterNodes('TROJAN')">TROJAN</button>
+<button class="px-2 py-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700" onclick="filterNodes('SS')">SS-2022</button>
+<button class="ml-auto px-2 py-1 bg-emerald-600 text-slate-950 font-bold rounded" onclick="selectFastestNode()">⚡ SELECT FASTEST</button>
+</div>
+<!-- Node List -->
+<div class="space-y-1.5 max-h-[300px] overflow-y-auto pr-1" id="server-nodes-container">
+<!-- Server 1 -->
+<div class="p-2 rounded-lg bg-black/85 border border-amber-500/80 flex items-center justify-between cursor-pointer hover:bg-slate-900 transition-colors" onclick="selectServer('🇸🇬', 'SG-CLOUDFLARE-REALITY-01', '● VLESS-XTLS', '38ms')">
+<div>
+<div class="text-[10.5px] font-bold text-amber-200 flex items-center space-x-1.5">
+<span>🇸🇬</span> <span>SG-CLOUDFLARE-REALITY-01</span>
+<span class="text-[7.5px] bg-emerald-900/60 text-emerald-300 px-1 rounded">ACTIVE</span>
+</div>
+<div class="text-[7.5px] font-mono text-slate-400 mt-0.5">VLESS • XTLS VISION • DIRECT FIBER</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono font-bold text-emerald-400">38 MS</span>
+<div class="text-[7px] font-mono text-slate-500">Loss: 0.0%</div>
+</div>
+</div>
+<!-- Server 2 -->
+<div class="p-2 rounded-lg bg-black/85 border border-slate-700 flex items-center justify-between cursor-pointer hover:bg-slate-900 transition-colors" onclick="selectServer('🇯🇵', 'JP-TOKYO-HYPER-02', '● TROJAN-TLS', '74ms')">
+<div>
+<div class="text-[10.5px] font-bold text-slate-200 flex items-center space-x-1.5">
+<span>🇯🇵</span> <span>JP-TOKYO-HYPER-02</span>
+</div>
+<div class="text-[7.5px] font-mono text-slate-400 mt-0.5">TROJAN • GFW BYPASS • SPEED OPTIMIZED</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono font-bold text-amber-400">74 MS</span>
+<div class="text-[7px] font-mono text-slate-500">Loss: 0.0%</div>
+</div>
+</div>
+<!-- Server 3 -->
+<div class="p-2 rounded-lg bg-black/85 border border-slate-700 flex items-center justify-between cursor-pointer hover:bg-slate-900 transition-colors" onclick="selectServer('🇺🇸', 'US-WEST-GAMING-04', '● VLESS-REALITY', '142ms')">
+<div>
+<div class="text-[10.5px] font-bold text-slate-200 flex items-center space-x-1.5">
+<span>🇺🇸</span> <span>US-WEST-GAMING-04</span>
+</div>
+<div class="text-[7.5px] font-mono text-slate-400 mt-0.5">VLESS REALITY • LOW JITTER • BBR v3</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono font-bold text-amber-500">142 MS</span>
+<div class="text-[7px] font-mono text-slate-500">Loss: 0.2%</div>
+</div>
+</div>
+<!-- Server 4 -->
+<div class="p-2 rounded-lg bg-black/85 border border-slate-700 flex items-center justify-between cursor-pointer hover:bg-slate-900 transition-colors" onclick="selectServer('🇩🇪', 'DE-FRANKFURT-CORE-05', '● VMESS-WS', '168ms')">
+<div>
+<div class="text-[10.5px] font-bold text-slate-200 flex items-center space-x-1.5">
+<span>🇩🇪</span> <span>DE-FRANKFURT-CORE-05</span>
+</div>
+<div class="text-[7.5px] font-mono text-slate-400 mt-0.5">VMESS AEAD • WEBSOCKET CDN</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono font-bold text-amber-500">168 MS</span>
+<div class="text-[7px] font-mono text-slate-500">Loss: 0.5%</div>
+</div>
+</div>
+<!-- Server 5 -->
+<div class="p-2 rounded-lg bg-black/85 border border-slate-700 flex items-center justify-between cursor-pointer hover:bg-slate-900 transition-colors" onclick="selectServer('🇭🇰', 'HK-EDGE-DIRECT-06', '● SS-2022', '45ms')">
+<div>
+<div class="text-[10.5px] font-bold text-slate-200 flex items-center space-x-1.5">
+<span>🇭🇰</span> <span>HK-EDGE-DIRECT-06</span>
+</div>
+<div class="text-[7.5px] font-mono text-slate-400 mt-0.5">SHADOWSOCKS-2022 • BLAKE3 • UDP READY</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono font-bold text-emerald-400">45 MS</span>
+<div class="text-[7px] font-mono text-slate-500">Loss: 0.0%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER & LANGUAGE BAR -->
+<footer class="mx-3 my-1 pt-1 border-t border-slate-400/50 flex items-center justify-between flex-shrink-0" data-purpose="language-selector-and-build">
+<div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-700 steel-bevel-cutout" data-purpose="language-toggle">
+<button class="px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-bold bg-slate-300 text-slate-950 shadow-inner uppercase tracking-[0.14em] stamped-metal-sub" id="lang-btn-en" onclick="setLanguage('en')">
+        ● English
+      </button>
+<button class="px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-semibold text-slate-400 hover:text-slate-200 uppercase tracking-[0.14em]" id="lang-btn-my" onclick="setLanguage('my')">
+        မြန်မာ
+      </button>
+</div>
+<div class="text-right">
+<div class="text-[8.5px] font-['Space_Grotesk'] font-black uppercase tracking-[0.2em] stamped-metal-groove" id="footer-serial">CHASSIS SERIAL: SS-V2R-99201</div>
+<div class="text-[7.5px] font-['Space_Grotesk'] font-bold uppercase tracking-[0.16em] stamped-metal-sub">HEAVY-DUTY INDUSTRIAL INTERFACE</div>
+</div>
+</footer>
+</main>
+<!-- SCRIPT LOGIC -->
+<script>
+  let isOnline = true;
+  let currentLanguage = 'en';
+  let activeTab = 'connect';
+  let rxBytes = 342.85;
+  let txBytes = 89.40;
+
+  // TAB SWITCHER CONTROLLER
+  function switchMainTab(tabId) {
+    activeTab = tabId;
+
+    const connectView = document.getElementById('view-connect');
+    const settingsView = document.getElementById('view-settings');
+    const infoView = document.getElementById('view-info');
+
+    const connectBtn = document.getElementById('nav-btn-connect');
+    const settingsBtn = document.getElementById('nav-btn-settings');
+    const infoBtn = document.getElementById('nav-btn-info');
+
+    [connectView, settingsView, infoView].forEach(v => v.classList.add('hidden'));
+    [connectBtn, settingsBtn, infoBtn].forEach(b => {
+      b.classList.remove('steel-bevel-raised', 'opacity-100');
+      b.classList.add('opacity-80');
+    });
+
+    if (tabId === 'connect') {
+      connectView.classList.remove('hidden');
+      connectBtn.classList.add('steel-bevel-raised', 'opacity-100');
+      connectBtn.classList.remove('opacity-80');
+    } else if (tabId === 'settings') {
+      settingsView.classList.remove('hidden');
+      settingsBtn.classList.add('steel-bevel-raised', 'opacity-100');
+      settingsBtn.classList.remove('opacity-80');
+    } else if (tabId === 'info') {
+      infoView.classList.remove('hidden');
+      infoBtn.classList.add('steel-bevel-raised', 'opacity-100');
+      infoBtn.classList.remove('opacity-80');
+    }
+  }
+
+  // HYDRAULIC BOTTOM SHEET CONTROLLER
+  function openDrawer(drawerId) {
+    const sheet = document.getElementById('drawer-' + drawerId);
+    if (sheet) {
+      sheet.classList.remove('hidden-sheet');
+      sheet.classList.add('open-sheet');
+    }
+  }
+
+  function closeAllDrawers() {
+    const sheet = document.getElementById('drawer-server');
+    if (sheet) {
+      sheet.classList.remove('open-sheet');
+      sheet.classList.add('hidden-sheet');
+    }
+  }
+
+  function handleBackdropClick(event, drawerId) {
+    if (event.target === document.getElementById('drawer-' + drawerId)) {
+      closeAllDrawers();
+    }
+  }
+
+  // KNURLED INDUSTRIAL TOGGLE SWITCH
+  function toggleKnurledSwitch(btn) {
+    btn.classList.toggle('active');
+    const circle = btn.querySelector('div');
+    if (btn.classList.contains('active')) {
+      btn.classList.remove('justify-start');
+      btn.classList.add('justify-end');
+      if (circle) circle.className = circle.className.replace('bg-slate-400', 'bg-white');
+    } else {
+      btn.classList.remove('justify-end');
+      btn.classList.add('justify-start');
+      if (circle) circle.className = circle.className.replace('bg-white', 'bg-slate-400');
+    }
+  }
+
+  // SERVER SELECTION
+  function selectServer(flag, name, proto, ping) {
+    document.getElementById('server-flag').textContent = flag;
+    document.getElementById('server-name').firstElementChild.textContent = name;
+    document.getElementById('server-protocol').textContent = proto;
+    const activePing = document.getElementById('active-server-ping');
+    if (activePing) activePing.textContent = ping;
+    closeAllDrawers();
+  }
+
+  function selectFastestNode() {
+    selectServer('🇸🇬', 'SG-CLOUDFLARE-REALITY-01', '● VLESS-XTLS', '38ms');
+  }
+
+  function filterNodes(type) {
+    // Visual cue for filtering
+    const container = document.getElementById('server-nodes-container');
+    container.style.opacity = '0.5';
+    setTimeout(() => { container.style.opacity = '1'; }, 150);
+  }
+
+  function importCustomUri() {
+    const val = document.getElementById('uri-import-input').value.trim();
+    if (!val) {
+      alert("Please paste a valid URI (vless://, vmess://, trojan://, ss://, etc.)");
+      return;
+    }
+    const protoMatch = val.match(/^([a-zA-Z0-9_-]+):\/\//);
+    if (!protoMatch) {
+      alert("Invalid configuration protocol! Supported protocols: vless://, vmess://, trojan://, ss://");
+      return;
+    }
+    const proto = protoMatch[1].toUpperCase();
+    let nodeName = "CUSTOM-" + proto + "-NODE";
+    try {
+      const hashIndex = val.indexOf("#");
+      if (hashIndex !== -1) {
+        nodeName = decodeURIComponent(val.slice(hashIndex + 1)) || nodeName;
+      }
+    } catch (e) {
+      console.warn("URI decode failed", e);
+    }
+    selectServer("🌐", nodeName, "● " + proto + "-ENTERPRISE", Math.floor(25 + Math.random() * 20) + "ms");
+    alert("Node imported successfully: " + nodeName);
+    document.getElementById('uri-import-input').value = '';
+    closeAllDrawers();
+  }
+
+  function pasteFromClipboard() {
+    navigator.clipboard?.readText().then(text => {
+      if (text) document.getElementById('uri-import-input').value = text;
+    }).catch(() => {
+      document.getElementById('uri-import-input').value = "vless://28b5e9@sg.copper-compass.net:443?security=reality&type=grpc";
+    });
+  }
+
+  // AI GEMINI BAY INTERACTION
+  function applyAiPrompt(txt) {
+    document.getElementById('ai-purpose-input').value = txt;
+  }
+
+  function toggleKeyVisibility() {
+    const fld = document.getElementById('gemini-key-field');
+    fld.type = fld.type === 'password' ? 'text' : 'password';
+  }
+
+  function runAiAnalysis() {
+    const btn = document.getElementById('ai-btn-text');
+    btn.textContent = '⏳ GEMINI ANALYZING NODE TOPOLOGY...';
+    setTimeout(() => {
+      btn.textContent = '✔ ROUTE OPTIMIZED: SG-REALITY-01';
+      selectFastestNode();
+      setTimeout(() => {
+        btn.textContent = '⚡ ANALYZE & RECOMMEND BEST ROUTE';
+      }, 2500);
+    }, 1200);
+  }
+
+  // EXPORT / COPY ACTIONS
+  function exportConfigJson() {
+    alert("Xray Core Client Configuration JSON copied to clipboard!");
+  }
+  function copyRawUri() {
+    alert("Active Server VLESS XTLS URI copied to clipboard!");
+  }
+
+  // DIAGNOSTIC SWEEP
+  function runDiagnosticSweep() {
+    const tcp = document.getElementById('diag-tcp');
+    const tls = document.getElementById('diag-tls');
+    const dns = document.getElementById('diag-dns');
+
+    tcp.textContent = '...';
+    tls.textContent = '...';
+    dns.textContent = '...';
+
+    setTimeout(() => {
+      tcp.textContent = Math.floor(20 + Math.random() * 8) + ' ms';
+      tls.textContent = Math.floor(15 + Math.random() * 6) + ' ms';
+      dns.textContent = Math.floor(4 + Math.random() * 4) + ' ms';
+    }, 600);
+  }
+
+  // LANGUAGE TOGGLE
+  function setLanguage(lang) {
+    currentLanguage = lang;
+    const btnEn = document.getElementById('lang-btn-en');
+    const btnMy = document.getElementById('lang-btn-my');
+
+    if (lang === 'en') {
+      btnEn.className = "px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-bold bg-slate-300 text-slate-950 shadow-inner uppercase tracking-[0.14em] stamped-metal-sub";
+      btnMy.className = "px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-semibold text-slate-400 hover:text-slate-200 uppercase tracking-[0.14em]";
+    } else {
+      btnMy.className = "px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-bold bg-slate-300 text-slate-950 shadow-inner uppercase tracking-[0.14em] stamped-metal-sub";
+      btnEn.className = "px-2 py-0.5 rounded text-[9px] font-['Space_Grotesk'] font-semibold text-slate-400 hover:text-slate-200 uppercase tracking-[0.14em]";
+    }
+  }
+
+  // LIVE ANALOG NEEDLES & ODOMETERS SIMULATION LOOP
+  setInterval(() => {
+    if (!isOnline) return;
+
+    // 1. Latency Jitter
+    const currentLatency = Math.floor(35 + Math.random() * 7);
+    const latencyAngle = (currentLatency - 38) * 1.5;
+    const latNeedleGroup = document.getElementById('latency-needle-group');
+    if (latNeedleGroup) latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
+    const latencyVal = document.getElementById('latency-val');
+    if (latencyVal) latencyVal.textContent = currentLatency;
+
+    // 2. Bandwidth Oscillation
+    const currentSpeed = (24 + (Math.sin(Date.now() / 1000) * 4.5) + (Math.random() * 2)).toFixed(1);
+    const speedAngle = ((parseFloat(currentSpeed) - 24.8) * 2.2);
+    const speedNeedleGroup = document.getElementById('speed-needle-group');
+    if (speedNeedleGroup) speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
+    const speedVal = document.getElementById('speed-val');
+    if (speedVal) speedVal.textContent = currentSpeed;
+
+    // 3. Increment Mechanical Odometers
+    rxBytes += 0.08 + (Math.random() * 0.04);
+    txBytes += 0.02 + (Math.random() * 0.02);
+    const rxOdo = document.getElementById('rx-odometer');
+    const txOdo = document.getElementById('tx-odometer');
+    if (rxOdo) rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
+    if (txOdo) txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+  }, 450);
+
+  // MASTER POWER ACTUATOR TOGGLE
+  function togglePowerState() {
+    isOnline = !isOnline;
+
+    const topStatusBadge = document.getElementById('top-status-badge');
+    const topStatusLed = document.getElementById('top-status-led');
+    const topStatusText = document.getElementById('top-status-text');
+
+    const tabLedConnect = document.getElementById('tab-led-connect');
+    const latencyCircuit = document.getElementById('latency-circuit');
+    const powerCircuitPrimary = document.getElementById('power-circuit-primary');
+    const bandwidthCircuit = document.getElementById('bandwidth-circuit');
+    const ecgContainer = document.getElementById('ecg-container');
+    const chassisNeonStreams = document.getElementById('chassis-pcb-neon-streams');
+
+    const powerEmblemRing = document.getElementById('power-emblem-ring');
+    const powerEmblemCore = document.getElementById('power-emblem-core');
+    const powerBoltIcon = document.getElementById('power-bolt-icon');
+    const powerStatusLbl = document.getElementById('power-status-lbl');
+
+    const latNeedleGroup = document.getElementById('latency-needle-group');
+    const speedNeedleGroup = document.getElementById('speed-needle-group');
+    const latencyVal = document.getElementById('latency-val');
+    const speedVal = document.getElementById('speed-val');
+
+    const rxOdometer = document.getElementById('rx-odometer');
+    const txOdometer = document.getElementById('tx-odometer');
+    const serverProtocol = document.getElementById('server-protocol');
+
+    if (isOnline) {
+      topStatusLed.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
+      topStatusText.textContent = 'SECURE TUNNEL';
+      topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-slate-900";
+
+      if (tabLedConnect) tabLedConnect.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]';
+
+      latencyCircuit.style.opacity = '1';
+      powerCircuitPrimary.style.opacity = '1';
+      bandwidthCircuit.style.opacity = '1';
+      if (chassisNeonStreams) chassisNeonStreams.style.opacity = '1';
+      ecgContainer.style.opacity = '1';
+
+      powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 via-amber-600 to-yellow-700 p-0.5 shadow-[0_0_16px_rgba(245,158,11,0.85)] flex items-center justify-center transition-all duration-300';
+      powerEmblemCore.className = 'w-full h-full rounded-full bg-gradient-to-t from-slate-950 to-slate-800 flex items-center justify-center pcb-glow-active transition-all duration-300';
+      powerBoltIcon.className = 'w-6 h-6 text-amber-300 filter drop-shadow-[0_0_7px_#f59e0b] transition-all duration-300';
+      powerStatusLbl.textContent = 'ONLINE';
+      powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-emerald-400 tracking-wider mt-1 drop-shadow-[0_0_5px_#10b981] transition-colors duration-300";
+
+      latNeedleGroup.style.transform = 'rotate(0deg)';
+      speedNeedleGroup.style.transform = 'rotate(0deg)';
+      latencyVal.textContent = '38';
+      speedVal.textContent = '24.8';
+
+      rxOdometer.className = 'text-[12px] font-mono font-black laser-cut-amber transition-all duration-300';
+      txOdometer.className = 'text-[12px] font-mono font-black laser-cut-cyan transition-all duration-300';
+      serverProtocol.className = 'text-emerald-400 font-bold';
+      serverProtocol.textContent = '● VLESS-XTLS';
+    } else {
+      topStatusLed.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_6px_#f43f5e]';
+      topStatusText.textContent = 'DISCONNECTED';
+      topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-rose-800";
+
+      if (tabLedConnect) tabLedConnect.className = 'w-2 h-2 rounded-full bg-slate-500';
+
+      latencyCircuit.style.opacity = '0';
+      powerCircuitPrimary.style.opacity = '0';
+      bandwidthCircuit.style.opacity = '0';
+      if (chassisNeonStreams) chassisNeonStreams.style.opacity = '0';
+      ecgContainer.style.opacity = '0.12';
+
+      powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 p-0.5 shadow-none flex items-center justify-center transition-all duration-300';
+      powerEmblemCore.className = 'w-full h-full rounded-full bg-slate-900 flex items-center justify-center transition-all duration-300';
+      powerBoltIcon.className = 'w-6 h-6 text-slate-600 transition-all duration-300';
+      powerStatusLbl.textContent = 'OFFLINE';
+      powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-rose-500 tracking-wider mt-1 drop-shadow-none transition-colors duration-300";
+
+      latNeedleGroup.style.transform = 'rotate(-55deg)';
+      speedNeedleGroup.style.transform = 'rotate(-55deg)';
+      latencyVal.textContent = '00';
+      speedVal.textContent = '0.0';
+
+      rxOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
+      rxOdometer.textContent = '---.-- MB';
+      txOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
+      txOdometer.textContent = '---.-- MB';
+      serverProtocol.className = 'text-slate-500';
+      serverProtocol.textContent = '○ DISCONNECTED';
+    }
+  }
+</script>
+</body></html>
