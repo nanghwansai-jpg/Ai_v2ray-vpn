@@ -1,0 +1,3 @@
+## 2025-05-14 - Inline DOM Animation and Telemetry Polling in Capacitor WebViews
+**Learning:** In a single-HTML Capacitor app with continuous high-frequency `setInterval` loops (450ms) driving multiple analog gauges and odometers, repeated `document.getElementById` calls and unconstrained DOM writes during backgrounded states or inactive tab views cause continuous repaint and layout churn on mobile WebView CPUs.
+**Action:** Always pre-cache DOM element references in a script-level object and short-circuit DOM writes when `document.hidden` or the relevant tab view is inactive, while keeping byte accumulation state updated in memory and flushing to the DOM on tab reactivation. Promote rotating elements to dedicated compositor layers with `will-change: transform`.

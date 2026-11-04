@@ -254,6 +254,8 @@
   .needle-transition {
     transition: transform 0.25s ease-out;
     transform-origin: 50px 50px;
+    /* Bolt: Promote rotating needles to dedicated compositor layer to avoid layout/repaint churn */
+    will-change: transform;
   }
   .circuit-glow-container {
     transition: opacity 0.45s ease-in-out, filter 0.45s ease-in-out;
@@ -977,6 +979,16 @@
   let rxBytes = 342.85;
   let txBytes = 89.40;
 
+  // Bolt: Cache frequently queried telemetry DOM references once to avoid ~800 getElementById calls/min
+  const domEl = {
+    latNeedle: document.getElementById('latency-needle-group'),
+    latVal: document.getElementById('latency-val'),
+    speedNeedle: document.getElementById('speed-needle-group'),
+    speedVal: document.getElementById('speed-val'),
+    rxOdo: document.getElementById('rx-odometer'),
+    txOdo: document.getElementById('tx-odometer')
+  };
+
   // TAB SWITCHER CONTROLLER
   function switchMainTab(tabId) {
     activeTab = tabId;
@@ -999,6 +1011,11 @@
       connectView.classList.remove('hidden');
       connectBtn.classList.add('steel-bevel-raised', 'opacity-100');
       connectBtn.classList.remove('opacity-80');
+      // Bolt: Instantly refresh telemetry DOM to current accumulated state upon tab re-entry
+      if (isOnline) {
+        if (domEl.rxOdo) domEl.rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
+        if (domEl.txOdo) domEl.txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+      }
     } else if (tabId === 'settings') {
       settingsView.classList.remove('hidden');
       settingsBtn.classList.add('steel-bevel-raised', 'opacity-100');
@@ -1167,32 +1184,35 @@
   }
 
   // LIVE ANALOG NEEDLES & ODOMETERS SIMULATION LOOP
+  // Bolt Optimization:
+  // - Accumulate bytes in memory unconditionally
+  // - Skip expensive DOM style mutations/reflows when document is hidden or Connect tab is inactive
+  // - Use pre-cached DOM nodes instead of 6 document.getElementById queries every 450ms (~800/min)
   setInterval(() => {
     if (!isOnline) return;
+
+    // Accumulate byte counters
+    rxBytes += 0.08 + (Math.random() * 0.04);
+    txBytes += 0.02 + (Math.random() * 0.02);
+
+    // Skip DOM updates if tab is not visible or user is browsing Settings/Info tab
+    if (document.hidden || activeTab !== 'connect') return;
 
     // 1. Latency Jitter
     const currentLatency = Math.floor(35 + Math.random() * 7);
     const latencyAngle = (currentLatency - 38) * 1.5;
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    if (latNeedleGroup) latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
-    const latencyVal = document.getElementById('latency-val');
-    if (latencyVal) latencyVal.textContent = currentLatency;
+    if (domEl.latNeedle) domEl.latNeedle.style.transform = `rotate(${latencyAngle}deg)`;
+    if (domEl.latVal) domEl.latVal.textContent = currentLatency;
 
     // 2. Bandwidth Oscillation
     const currentSpeed = (24 + (Math.sin(Date.now() / 1000) * 4.5) + (Math.random() * 2)).toFixed(1);
     const speedAngle = ((parseFloat(currentSpeed) - 24.8) * 2.2);
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    if (speedNeedleGroup) speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
-    const speedVal = document.getElementById('speed-val');
-    if (speedVal) speedVal.textContent = currentSpeed;
+    if (domEl.speedNeedle) domEl.speedNeedle.style.transform = `rotate(${speedAngle}deg)`;
+    if (domEl.speedVal) domEl.speedVal.textContent = currentSpeed;
 
-    // 3. Increment Mechanical Odometers
-    rxBytes += 0.08 + (Math.random() * 0.04);
-    txBytes += 0.02 + (Math.random() * 0.02);
-    const rxOdo = document.getElementById('rx-odometer');
-    const txOdo = document.getElementById('tx-odometer');
-    if (rxOdo) rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
-    if (txOdo) txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+    // 3. Mechanical Odometers
+    if (domEl.rxOdo) domEl.rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
+    if (domEl.txOdo) domEl.txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
   }, 450);
 
   // MASTER POWER ACTUATOR TOGGLE
