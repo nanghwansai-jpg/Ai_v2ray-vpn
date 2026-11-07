@@ -1166,6 +1166,32 @@
     }
   }
 
+  // Bolt Optimization: Cache static DOM nodes queried in high-frequency loops (450ms interval)
+  // and frequent status toggles, avoiding ~1,000+ redundant document.getElementById lookups/min
+  // and saving CPU cycles & battery on mobile hardware.
+  const dom = {
+    topStatusBadge: document.getElementById('top-status-badge'),
+    topStatusLed: document.getElementById('top-status-led'),
+    topStatusText: document.getElementById('top-status-text'),
+    tabLedConnect: document.getElementById('tab-led-connect'),
+    latencyCircuit: document.getElementById('latency-circuit'),
+    powerCircuitPrimary: document.getElementById('power-circuit-primary'),
+    bandwidthCircuit: document.getElementById('bandwidth-circuit'),
+    ecgContainer: document.getElementById('ecg-container'),
+    chassisNeonStreams: document.getElementById('chassis-pcb-neon-streams'),
+    powerEmblemRing: document.getElementById('power-emblem-ring'),
+    powerEmblemCore: document.getElementById('power-emblem-core'),
+    powerBoltIcon: document.getElementById('power-bolt-icon'),
+    powerStatusLbl: document.getElementById('power-status-lbl'),
+    latNeedleGroup: document.getElementById('latency-needle-group'),
+    speedNeedleGroup: document.getElementById('speed-needle-group'),
+    latencyVal: document.getElementById('latency-val'),
+    speedVal: document.getElementById('speed-val'),
+    rxOdometer: document.getElementById('rx-odometer'),
+    txOdometer: document.getElementById('tx-odometer'),
+    serverProtocol: document.getElementById('server-protocol')
+  };
+
   // LIVE ANALOG NEEDLES & ODOMETERS SIMULATION LOOP
   setInterval(() => {
     if (!isOnline) return;
@@ -1173,56 +1199,48 @@
     // 1. Latency Jitter
     const currentLatency = Math.floor(35 + Math.random() * 7);
     const latencyAngle = (currentLatency - 38) * 1.5;
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    if (latNeedleGroup) latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
-    const latencyVal = document.getElementById('latency-val');
-    if (latencyVal) latencyVal.textContent = currentLatency;
+    if (dom.latNeedleGroup) dom.latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
+    if (dom.latencyVal) dom.latencyVal.textContent = currentLatency;
 
     // 2. Bandwidth Oscillation
     const currentSpeed = (24 + (Math.sin(Date.now() / 1000) * 4.5) + (Math.random() * 2)).toFixed(1);
     const speedAngle = ((parseFloat(currentSpeed) - 24.8) * 2.2);
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    if (speedNeedleGroup) speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
-    const speedVal = document.getElementById('speed-val');
-    if (speedVal) speedVal.textContent = currentSpeed;
+    if (dom.speedNeedleGroup) dom.speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
+    if (dom.speedVal) dom.speedVal.textContent = currentSpeed;
 
     // 3. Increment Mechanical Odometers
     rxBytes += 0.08 + (Math.random() * 0.04);
     txBytes += 0.02 + (Math.random() * 0.02);
-    const rxOdo = document.getElementById('rx-odometer');
-    const txOdo = document.getElementById('tx-odometer');
-    if (rxOdo) rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
-    if (txOdo) txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+    if (dom.rxOdometer) dom.rxOdometer.textContent = rxBytes.toFixed(2) + ' MB';
+    if (dom.txOdometer) dom.txOdometer.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
   }, 450);
 
   // MASTER POWER ACTUATOR TOGGLE
   function togglePowerState() {
     isOnline = !isOnline;
 
-    const topStatusBadge = document.getElementById('top-status-badge');
-    const topStatusLed = document.getElementById('top-status-led');
-    const topStatusText = document.getElementById('top-status-text');
-
-    const tabLedConnect = document.getElementById('tab-led-connect');
-    const latencyCircuit = document.getElementById('latency-circuit');
-    const powerCircuitPrimary = document.getElementById('power-circuit-primary');
-    const bandwidthCircuit = document.getElementById('bandwidth-circuit');
-    const ecgContainer = document.getElementById('ecg-container');
-    const chassisNeonStreams = document.getElementById('chassis-pcb-neon-streams');
-
-    const powerEmblemRing = document.getElementById('power-emblem-ring');
-    const powerEmblemCore = document.getElementById('power-emblem-core');
-    const powerBoltIcon = document.getElementById('power-bolt-icon');
-    const powerStatusLbl = document.getElementById('power-status-lbl');
-
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    const latencyVal = document.getElementById('latency-val');
-    const speedVal = document.getElementById('speed-val');
-
-    const rxOdometer = document.getElementById('rx-odometer');
-    const txOdometer = document.getElementById('tx-odometer');
-    const serverProtocol = document.getElementById('server-protocol');
+    const {
+      topStatusBadge,
+      topStatusLed,
+      topStatusText,
+      tabLedConnect,
+      latencyCircuit,
+      powerCircuitPrimary,
+      bandwidthCircuit,
+      ecgContainer,
+      chassisNeonStreams,
+      powerEmblemRing,
+      powerEmblemCore,
+      powerBoltIcon,
+      powerStatusLbl,
+      latNeedleGroup,
+      speedNeedleGroup,
+      latencyVal,
+      speedVal,
+      rxOdometer,
+      txOdometer,
+      serverProtocol
+    } = dom;
 
     if (isOnline) {
       topStatusLed.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
