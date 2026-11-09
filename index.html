@@ -1166,122 +1166,138 @@
     }
   }
 
-  // LIVE ANALOG NEEDLES & ODOMETERS SIMULATION LOOP
-  setInterval(() => {
-    if (!isOnline) return;
+  // PERFORMANCE OPTIMIZATION (Bolt ⚡): Cache DOM references to avoid repeated
+  // document.getElementById traversal on every tick of the 450ms telemetry loop
+  // and master toggle. Caching reduces recurring layout/tree query overhead.
+  const domElements = {
+    topStatusLed: document.getElementById('top-status-led'),
+    topStatusText: document.getElementById('top-status-text'),
+    tabLedConnect: document.getElementById('tab-led-connect'),
+    latencyCircuit: document.getElementById('latency-circuit'),
+    powerCircuitPrimary: document.getElementById('power-circuit-primary'),
+    bandwidthCircuit: document.getElementById('bandwidth-circuit'),
+    chassisNeonStreams: document.getElementById('chassis-pcb-neon-streams'),
+    ecgContainer: document.getElementById('ecg-container'),
+    powerEmblemRing: document.getElementById('power-emblem-ring'),
+    powerEmblemCore: document.getElementById('power-emblem-core'),
+    powerBoltIcon: document.getElementById('power-bolt-icon'),
+    powerStatusLbl: document.getElementById('power-status-lbl'),
+    latNeedleGroup: document.getElementById('latency-needle-group'),
+    speedNeedleGroup: document.getElementById('speed-needle-group'),
+    latencyVal: document.getElementById('latency-val'),
+    speedVal: document.getElementById('speed-val'),
+    rxOdometer: document.getElementById('rx-odometer'),
+    txOdometer: document.getElementById('tx-odometer'),
+    serverProtocol: document.getElementById('server-protocol'),
+  };
 
+  // PERFORMANCE OPTIMIZATION (Bolt ⚡): Manage telemetry loop lifecycle so the
+  // timer is paused when offline. Eliminates ~2.2 unnecessary CPU wakeups/sec when
+  // the client is disconnected, reducing mobile CPU/battery usage.
+  let telemetryTimerId = null;
+
+  function updateTelemetryTick() {
     // 1. Latency Jitter
     const currentLatency = Math.floor(35 + Math.random() * 7);
     const latencyAngle = (currentLatency - 38) * 1.5;
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    if (latNeedleGroup) latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
-    const latencyVal = document.getElementById('latency-val');
-    if (latencyVal) latencyVal.textContent = currentLatency;
+    if (domElements.latNeedleGroup) domElements.latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
+    if (domElements.latencyVal) domElements.latencyVal.textContent = currentLatency;
 
     // 2. Bandwidth Oscillation
     const currentSpeed = (24 + (Math.sin(Date.now() / 1000) * 4.5) + (Math.random() * 2)).toFixed(1);
     const speedAngle = ((parseFloat(currentSpeed) - 24.8) * 2.2);
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    if (speedNeedleGroup) speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
-    const speedVal = document.getElementById('speed-val');
-    if (speedVal) speedVal.textContent = currentSpeed;
+    if (domElements.speedNeedleGroup) domElements.speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
+    if (domElements.speedVal) domElements.speedVal.textContent = currentSpeed;
 
     // 3. Increment Mechanical Odometers
     rxBytes += 0.08 + (Math.random() * 0.04);
     txBytes += 0.02 + (Math.random() * 0.02);
-    const rxOdo = document.getElementById('rx-odometer');
-    const txOdo = document.getElementById('tx-odometer');
-    if (rxOdo) rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
-    if (txOdo) txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
-  }, 450);
+    if (domElements.rxOdometer) domElements.rxOdometer.textContent = rxBytes.toFixed(2) + ' MB';
+    if (domElements.txOdometer) domElements.txOdometer.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+  }
+
+  function startTelemetryLoop() {
+    if (!telemetryTimerId) {
+      telemetryTimerId = setInterval(updateTelemetryTick, 450);
+    }
+  }
+
+  function stopTelemetryLoop() {
+    if (telemetryTimerId) {
+      clearInterval(telemetryTimerId);
+      telemetryTimerId = null;
+    }
+  }
+
+  // Start telemetry loop initially (since default state is online)
+  startTelemetryLoop();
 
   // MASTER POWER ACTUATOR TOGGLE
   function togglePowerState() {
     isOnline = !isOnline;
 
-    const topStatusBadge = document.getElementById('top-status-badge');
-    const topStatusLed = document.getElementById('top-status-led');
-    const topStatusText = document.getElementById('top-status-text');
-
-    const tabLedConnect = document.getElementById('tab-led-connect');
-    const latencyCircuit = document.getElementById('latency-circuit');
-    const powerCircuitPrimary = document.getElementById('power-circuit-primary');
-    const bandwidthCircuit = document.getElementById('bandwidth-circuit');
-    const ecgContainer = document.getElementById('ecg-container');
-    const chassisNeonStreams = document.getElementById('chassis-pcb-neon-streams');
-
-    const powerEmblemRing = document.getElementById('power-emblem-ring');
-    const powerEmblemCore = document.getElementById('power-emblem-core');
-    const powerBoltIcon = document.getElementById('power-bolt-icon');
-    const powerStatusLbl = document.getElementById('power-status-lbl');
-
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    const latencyVal = document.getElementById('latency-val');
-    const speedVal = document.getElementById('speed-val');
-
-    const rxOdometer = document.getElementById('rx-odometer');
-    const txOdometer = document.getElementById('tx-odometer');
-    const serverProtocol = document.getElementById('server-protocol');
-
     if (isOnline) {
-      topStatusLed.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
-      topStatusText.textContent = 'SECURE TUNNEL';
-      topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-slate-900";
+      domElements.topStatusLed.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
+      domElements.topStatusText.textContent = 'SECURE TUNNEL';
+      domElements.topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-slate-900";
 
-      if (tabLedConnect) tabLedConnect.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]';
+      if (domElements.tabLedConnect) domElements.tabLedConnect.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]';
 
-      latencyCircuit.style.opacity = '1';
-      powerCircuitPrimary.style.opacity = '1';
-      bandwidthCircuit.style.opacity = '1';
-      if (chassisNeonStreams) chassisNeonStreams.style.opacity = '1';
-      ecgContainer.style.opacity = '1';
+      domElements.latencyCircuit.style.opacity = '1';
+      domElements.powerCircuitPrimary.style.opacity = '1';
+      domElements.bandwidthCircuit.style.opacity = '1';
+      if (domElements.chassisNeonStreams) domElements.chassisNeonStreams.style.opacity = '1';
+      domElements.ecgContainer.style.opacity = '1';
 
-      powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 via-amber-600 to-yellow-700 p-0.5 shadow-[0_0_16px_rgba(245,158,11,0.85)] flex items-center justify-center transition-all duration-300';
-      powerEmblemCore.className = 'w-full h-full rounded-full bg-gradient-to-t from-slate-950 to-slate-800 flex items-center justify-center pcb-glow-active transition-all duration-300';
-      powerBoltIcon.className = 'w-6 h-6 text-amber-300 filter drop-shadow-[0_0_7px_#f59e0b] transition-all duration-300';
-      powerStatusLbl.textContent = 'ONLINE';
-      powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-emerald-400 tracking-wider mt-1 drop-shadow-[0_0_5px_#10b981] transition-colors duration-300";
+      domElements.powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 via-amber-600 to-yellow-700 p-0.5 shadow-[0_0_16px_rgba(245,158,11,0.85)] flex items-center justify-center transition-all duration-300';
+      domElements.powerEmblemCore.className = 'w-full h-full rounded-full bg-gradient-to-t from-slate-950 to-slate-800 flex items-center justify-center pcb-glow-active transition-all duration-300';
+      domElements.powerBoltIcon.className = 'w-6 h-6 text-amber-300 filter drop-shadow-[0_0_7px_#f59e0b] transition-all duration-300';
+      domElements.powerStatusLbl.textContent = 'ONLINE';
+      domElements.powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-emerald-400 tracking-wider mt-1 drop-shadow-[0_0_5px_#10b981] transition-colors duration-300";
 
-      latNeedleGroup.style.transform = 'rotate(0deg)';
-      speedNeedleGroup.style.transform = 'rotate(0deg)';
-      latencyVal.textContent = '38';
-      speedVal.textContent = '24.8';
+      domElements.latNeedleGroup.style.transform = 'rotate(0deg)';
+      domElements.speedNeedleGroup.style.transform = 'rotate(0deg)';
+      domElements.latencyVal.textContent = '38';
+      domElements.speedVal.textContent = '24.8';
 
-      rxOdometer.className = 'text-[12px] font-mono font-black laser-cut-amber transition-all duration-300';
-      txOdometer.className = 'text-[12px] font-mono font-black laser-cut-cyan transition-all duration-300';
-      serverProtocol.className = 'text-emerald-400 font-bold';
-      serverProtocol.textContent = '● VLESS-XTLS';
+      domElements.rxOdometer.className = 'text-[12px] font-mono font-black laser-cut-amber transition-all duration-300';
+      domElements.txOdometer.className = 'text-[12px] font-mono font-black laser-cut-cyan transition-all duration-300';
+      domElements.serverProtocol.className = 'text-emerald-400 font-bold';
+      domElements.serverProtocol.textContent = '● VLESS-XTLS';
+
+      startTelemetryLoop();
     } else {
-      topStatusLed.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_6px_#f43f5e]';
-      topStatusText.textContent = 'DISCONNECTED';
-      topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-rose-800";
+      stopTelemetryLoop();
 
-      if (tabLedConnect) tabLedConnect.className = 'w-2 h-2 rounded-full bg-slate-500';
+      domElements.topStatusLed.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_6px_#f43f5e]';
+      domElements.topStatusText.textContent = 'DISCONNECTED';
+      domElements.topStatusText.className = "text-[9px] font-['Space_Grotesk'] font-bold tracking-[0.14em] uppercase text-rose-800";
 
-      latencyCircuit.style.opacity = '0';
-      powerCircuitPrimary.style.opacity = '0';
-      bandwidthCircuit.style.opacity = '0';
-      if (chassisNeonStreams) chassisNeonStreams.style.opacity = '0';
-      ecgContainer.style.opacity = '0.12';
+      if (domElements.tabLedConnect) domElements.tabLedConnect.className = 'w-2 h-2 rounded-full bg-slate-500';
 
-      powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 p-0.5 shadow-none flex items-center justify-center transition-all duration-300';
-      powerEmblemCore.className = 'w-full h-full rounded-full bg-slate-900 flex items-center justify-center transition-all duration-300';
-      powerBoltIcon.className = 'w-6 h-6 text-slate-600 transition-all duration-300';
-      powerStatusLbl.textContent = 'OFFLINE';
-      powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-rose-500 tracking-wider mt-1 drop-shadow-none transition-colors duration-300";
+      domElements.latencyCircuit.style.opacity = '0';
+      domElements.powerCircuitPrimary.style.opacity = '0';
+      domElements.bandwidthCircuit.style.opacity = '0';
+      if (domElements.chassisNeonStreams) domElements.chassisNeonStreams.style.opacity = '0';
+      domElements.ecgContainer.style.opacity = '0.12';
 
-      latNeedleGroup.style.transform = 'rotate(-55deg)';
-      speedNeedleGroup.style.transform = 'rotate(-55deg)';
-      latencyVal.textContent = '00';
-      speedVal.textContent = '0.0';
+      domElements.powerEmblemRing.className = 'w-11 h-11 rounded-full bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 p-0.5 shadow-none flex items-center justify-center transition-all duration-300';
+      domElements.powerEmblemCore.className = 'w-full h-full rounded-full bg-slate-900 flex items-center justify-center transition-all duration-300';
+      domElements.powerBoltIcon.className = 'w-6 h-6 text-slate-600 transition-all duration-300';
+      domElements.powerStatusLbl.textContent = 'OFFLINE';
+      domElements.powerStatusLbl.className = "text-[9px] font-['Orbitron'] font-black text-rose-500 tracking-wider mt-1 drop-shadow-none transition-colors duration-300";
 
-      rxOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
-      rxOdometer.textContent = '---.-- MB';
-      txOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
-      txOdometer.textContent = '---.-- MB';
-      serverProtocol.className = 'text-slate-500';
-      serverProtocol.textContent = '○ DISCONNECTED';
+      domElements.latNeedleGroup.style.transform = 'rotate(-55deg)';
+      domElements.speedNeedleGroup.style.transform = 'rotate(-55deg)';
+      domElements.latencyVal.textContent = '00';
+      domElements.speedVal.textContent = '0.0';
+
+      domElements.rxOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
+      domElements.rxOdometer.textContent = '---.-- MB';
+      domElements.txOdometer.className = 'text-[12px] font-mono font-bold text-slate-500 transition-all duration-300';
+      domElements.txOdometer.textContent = '---.-- MB';
+      domElements.serverProtocol.className = 'text-slate-500';
+      domElements.serverProtocol.textContent = '○ DISCONNECTED';
     }
   }
 </script>
