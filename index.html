@@ -254,6 +254,8 @@
   .needle-transition {
     transition: transform 0.25s ease-out;
     transform-origin: 50px 50px;
+    /* Bolt Opt: Promote gauge needles to dedicated compositor layers to avoid repaint overhead during frequent telemetry sweeps */
+    will-change: transform;
   }
   .circuit-glow-container {
     transition: opacity 0.45s ease-in-out, filter 0.45s ease-in-out;
@@ -1166,6 +1168,14 @@
     }
   }
 
+  // Bolt Opt: Cache repeated DOM lookups outside the 450ms telemetry interval loop to eliminate DOM query overhead & GC pressure.
+  const cachedLatNeedleGroup = document.getElementById('latency-needle-group');
+  const cachedLatencyVal = document.getElementById('latency-val');
+  const cachedSpeedNeedleGroup = document.getElementById('speed-needle-group');
+  const cachedSpeedVal = document.getElementById('speed-val');
+  const cachedRxOdo = document.getElementById('rx-odometer');
+  const cachedTxOdo = document.getElementById('tx-odometer');
+
   // LIVE ANALOG NEEDLES & ODOMETERS SIMULATION LOOP
   setInterval(() => {
     if (!isOnline) return;
@@ -1173,26 +1183,20 @@
     // 1. Latency Jitter
     const currentLatency = Math.floor(35 + Math.random() * 7);
     const latencyAngle = (currentLatency - 38) * 1.5;
-    const latNeedleGroup = document.getElementById('latency-needle-group');
-    if (latNeedleGroup) latNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
-    const latencyVal = document.getElementById('latency-val');
-    if (latencyVal) latencyVal.textContent = currentLatency;
+    if (cachedLatNeedleGroup) cachedLatNeedleGroup.style.transform = `rotate(${latencyAngle}deg)`;
+    if (cachedLatencyVal) cachedLatencyVal.textContent = currentLatency;
 
     // 2. Bandwidth Oscillation
     const currentSpeed = (24 + (Math.sin(Date.now() / 1000) * 4.5) + (Math.random() * 2)).toFixed(1);
     const speedAngle = ((parseFloat(currentSpeed) - 24.8) * 2.2);
-    const speedNeedleGroup = document.getElementById('speed-needle-group');
-    if (speedNeedleGroup) speedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
-    const speedVal = document.getElementById('speed-val');
-    if (speedVal) speedVal.textContent = currentSpeed;
+    if (cachedSpeedNeedleGroup) cachedSpeedNeedleGroup.style.transform = `rotate(${speedAngle}deg)`;
+    if (cachedSpeedVal) cachedSpeedVal.textContent = currentSpeed;
 
     // 3. Increment Mechanical Odometers
     rxBytes += 0.08 + (Math.random() * 0.04);
     txBytes += 0.02 + (Math.random() * 0.02);
-    const rxOdo = document.getElementById('rx-odometer');
-    const txOdo = document.getElementById('tx-odometer');
-    if (rxOdo) rxOdo.textContent = rxBytes.toFixed(2) + ' MB';
-    if (txOdo) txOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
+    if (cachedRxOdo) cachedRxOdo.textContent = rxBytes.toFixed(2) + ' MB';
+    if (cachedTxOdo) cachedTxOdo.textContent = txBytes.toFixed(2).padStart(6, '0') + ' MB';
   }, 450);
 
   // MASTER POWER ACTUATOR TOGGLE
